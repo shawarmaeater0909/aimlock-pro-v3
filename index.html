@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHZ EXTERNAL PRO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --neon: #ff0055; --bg: #0d0208; --card: #1a1a1a; }
+        body { background-color: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+        .sidebar { width: 70px; border-right: 1px solid #333; background: #000; height: 100vh; }
+        .nav-item { height: 60px; display: flex; align-items: center; justify-content: center; color: #555; cursor: pointer; transition: 0.3s; }
+        .nav-item.active { color: var(--neon); border-left: 3px solid var(--neon); background: rgba(255, 0, 85, 0.1); }
+        .neon-border { border: 1px solid var(--neon); box-shadow: 0 0 10px rgba(255, 0, 85, 0.3); }
+        .glass-panel { background: rgba(26, 26, 26, 0.95); border-radius: 15px; margin: 10px; height: calc(100vh - 20px); flex-grow: 1; display: flex; flex-col; border: 1px solid #333; }
+        
+        /* Toggle Styling */
+        .switch { position: relative; display: inline-block; width: 45px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--neon); }
+        input:checked + .slider:before { transform: translateX(23px); }
+    </style>
+</head>
+<body class="flex">
+
+    <div class="sidebar flex flex-col pt-4">
+        <div class="nav-item active" onclick="tab('mira')"><i class="fa-solid fa-crosshairs text-xl"></i></div>
+        <div class="nav-item" onclick="tab('perf')"><i class="fa-solid fa-microchip text-xl"></i></div>
+        <div class="nav-item" onclick="tab('sensi')"><i class="fa-solid fa-sliders text-xl"></i></div>
+        <div class="nav-item" onclick="tab('inject')"><i class="fa-solid fa-bolt text-xl"></i></div>
+    </div>
+
+    <div class="glass-panel p-4 overflow-y-auto">
+        <div class="flex justify-between items-center mb-4 border-b border-gray-800 pb-2">
+            <h1 class="text-pink-600 font-black italic">CHZ EXTERNAL <span class="text-white text-xs ml-2">V2.0</span></h1>
+            <i class="fa-solid fa-xmark text-gray-500"></i>
+        </div>
+
+        <div id="mira" class="tab-content space-y-3">
+            <div class="bg-[#222] p-3 rounded-lg flex justify-between items-center border border-gray-700">
+                <div><h3 class="font-bold text-sm">Aimbot Legit</h3><p class="text-[10px] text-gray-400">Melhora o rastreamento</p></div>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+            <div class="bg-[#222] p-3 rounded-lg flex justify-between items-center border border-gray-700">
+                <div><h3 class="font-bold text-sm">Precisão Absoluta</h3><p class="text-[10px] text-gray-400">Máxima exatidão</p></div>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <div id="inject" class="tab-content hidden space-y-4">
+            <div class="text-center py-6">
+                <div class="w-20 h-20 rounded-full border-2 border-pink-600 mx-auto flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-wand-magic-sparkles text-pink-600 text-3xl"></i>
+                </div>
+                <h2 class="font-bold text-pink-600">Sistema de Injeção</h2>
+                <p class="text-xs text-gray-400">Selecione a versão para bypass</p>
+            </div>
+            <button onclick="simInject('FF Normal')" class="w-full bg-pink-600 py-3 rounded-lg font-bold uppercase text-sm hover:bg-pink-700">Injetar no FF</button>
+            <button onclick="simInject('FF Max')" class="w-full bg-transparent border border-pink-600 py-3 rounded-lg font-bold uppercase text-sm hover:bg-pink-600/20">Injetar no FF MAX</button>
+        </div>
+
+        <div id="console" class="hidden mt-6 bg-black p-3 rounded font-mono text-[10px] text-green-400 h-32 overflow-y-auto border border-gray-800">
+        </div>
+    </div>
+
+    <script>
+        function tab(name) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(name).classList.remove('hidden');
+            event.currentTarget.classList.add('active');
+        }
+
+        function simInject(game) {
+            const con = document.getElementById('console');
+            con.classList.remove('hidden');
+            con.innerHTML = "";
+            const logs = [
+                `> Localizando ${game}...`,
+                "> Bypass Security V3 Ativo...",
+                "> Limpando logs de rastreio...",
+                "> Calibração concluída!",
+                "> Sucesso! Abra o jogo agora."
+            ];
+            
+            let i = 0;
+            const interval = setInterval(() => {
+                con.innerHTML += `<div>${logs[i]}</div>`;
+                con.scrollTop = con.scrollHeight;
+                i++;
+                if(i === logs.length) {
+                    clearInterval(interval);
+                    // This creates a vibration on mobile
+                    if (window.navigator.vibrate) window.navigator.vibrate([100, 50, 100]);
+                    alert(game + " Otimizado! ");
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
